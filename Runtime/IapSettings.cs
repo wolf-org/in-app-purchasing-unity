@@ -7,6 +7,7 @@ namespace VirtueSky.Iap
     public class IapSettings : ScriptableObject
     {
         private static IapSettings instance;
+
         public static IapSettings Instance
         {
             get
@@ -14,10 +15,12 @@ namespace VirtueSky.Iap
                 if (instance != null) return instance;
 
                 instance = Resources.Load<IapSettings>(typeof(IapSettings).Name);
-                if (instance == null) throw new Exception($"Scriptable setting for {typeof(IapSettings)} must be create before run!");
+                if (instance == null)
+                    throw new Exception($"Scriptable setting for {typeof(IapSettings)} must be create before run!");
                 return instance;
             }
         }
+
         [SerializeField] private bool runtimeAutoInit = true;
         [SerializeField] private List<IapDataProduct> iapDataProducts = new List<IapDataProduct>();
         [SerializeField] private bool isValidatePurchase = true;

@@ -10,7 +10,7 @@ namespace VirtueSky.Iap
 {
     public class IapManager : MonoBehaviour, IDetailedStoreListener
     {
-        public static IapManager instance;
+        public static IapManager Instance;
         public static event Action<string> OnPurchaseSucceedEvent;
         public static event Action<string> OnPurchaseFailedEvent;
         public static event Action<Product> OnIapTrackingRevenueEvent;
@@ -23,9 +23,9 @@ namespace VirtueSky.Iap
 
         private void Awake()
         {
-            if (instance == null)
+            if (Instance == null)
             {
-                instance = this;
+                Instance = this;
             }
             else
             {
@@ -35,7 +35,7 @@ namespace VirtueSky.Iap
 
         private void OnDestroy()
         {
-            if (instance == this) instance = null;
+            if (Instance == this) Instance = null;
         }
 
         private void Start()
