@@ -1,0 +1,27 @@
+{
+    "name": "UnityCommon.IAP",
+    "rootNamespace": "",
+    "references": [
+        "GUID:60bfecf5cb232594891bc622f40d6bed",
+        "GUID:94e1de2458b07d0bf1e9f13e6ae06443",
+        "GUID:e63a64384cc3ef04cac761c1ce76e9c2",
+        "GUID:08d1c582746949b40ba6a45cdb776bdf",
+        "GUID:fe25561d224ed4743af4c60938a59d0b",
+        "GUID:70ea675efa2644cef98c7ece24158333"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.purchasing",
+            "expression": "4.11.0",
+            "define": "VIRTUESKY_IAP"
+        }
+    ],
+    "noEngineReferences": false
+}
