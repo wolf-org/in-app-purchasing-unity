@@ -36,6 +36,7 @@ for version `1.0.0`
 ![Unity_BVkNMfm6fL](https://github.com/wolf-package/in-app-purchasing/assets/102142404/798a790c-c988-48c5-8b32-e88dab94a594)
 
 
+- If you select `Runtime Auto Init` in `IapSettings` then `IapManager` will be created automatically after loading the scene. Otherwise you will have to attach `IapManager` to the scene to ensure purchases can be made
 - Add data product to list (enter id and select product type), then click `Generate Product`
 - Select `Validate Product` and enter `Google Play Store Key`, then click `Obfuscator Key`
 - Don't forget add Define Symbol `VIRTUESKY_IAP`
