@@ -27,3 +27,178 @@ for version `1.0.0`
 ```csharp
 "com.wolf-package.in-app-purchasing":"https://github.com/wolf-package/in-app-purchasing.git#1.0.0",
 ```
+
+## Use
+
+### Setup
+- Use via MenuItem `Unity-Common` > `IapSettings` or shortcut `Ctrl + W / Command + W` to open `IapSettings`
+
+![Unity_BVkNMfm6fL](https://github.com/wolf-package/in-app-purchasing/assets/102142404/798a790c-c988-48c5-8b32-e88dab94a594)
+
+
+- Add data product to list (enter id and select product type), then click `Generate Product`
+- Select `Validate Product` and enter `Google Play Store Key`, then click `Obfuscator Key`
+- Don't forget add `Define Symbol`
+
+- After clicking `Generate Product`, an `IapProduct.cs` script is generated in the following format
+
+```csharp
+
+	public struct IapProduct
+	{
+		public const string ID_COIN = "com.test.coin";
+		public static IapDataProduct PurchaseCoin()
+		{
+			return IapManager.Instance.PurchaseProduct(IapSettings.Instance.IapDataProducts[0]);
+		}
+
+		public static bool IsPurchasedCoin()
+		{
+			return IapManager.Instance.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[0]);
+		}
+
+		public static string LocalizedPriceCoin()
+		{
+			return IapManager.Instance.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[0]);
+		}
+
+		public const string ID_REMOVEADS = "com.test.removeads";
+		public static IapDataProduct PurchaseRemoveads()
+		{
+			return IapManager.Instance.PurchaseProduct(IapSettings.Instance.IapDataProducts[1]);
+		}
+
+		public static bool IsPurchasedRemoveads()
+		{
+			return IapManager.Instance.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[1]);
+		}
+
+		public static string LocalizedPriceRemoveads()
+		{
+			return IapManager.Instance.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[1]);
+		}
+
+	}
+
+```
+
+### Handle purchase product
+- Example 1:
+```csharp
+        public Button buttonRemoveAds;
+        public TextMeshProUGUI textLocalizedPriceRemoveAds;
+
+        /// <summary>
+        /// set text localized price for RemoveAds product
+        /// </summary>
+        void SetupTextPrice()
+        {
+            textLocalizedPriceRemoveAds.text = IapProduct.LocalizedPriceRemoveads();
+        }
+
+        /// <summary>
+        /// refresh ui button remove ads
+        /// disable buttonRemoveAds if RemoveAds product has been purchased
+        /// </summary>
+        void RefreshUI()
+        {
+            buttonRemoveAds.gameObject.SetActive(!IapProduct.IsPurchasedRemoveads());
+        }
+
+        /// <summary>
+        /// Buy remove ads iap
+        /// </summary>
+        public void OnClickRemoveAds()
+        {
+            IapProduct.PurchaseRemoveads().OnCompleted(() =>
+            {
+                // handle purchase success
+                RefreshUI();
+            }).OnFailed(() =>
+            {
+                // handle purchase failed
+            });
+        }
+
+```
+- Example 2: You create a new script similar to the demo below. then attach it to LoadingScene
+(From version 1.1.1, `OnPurchaseSuccessEvent` and `OnPurchaseFailedEvent` will be called via `IapManager`)
+
+```csharp
+
+public class HandlePurchaseIap : MonoBehaviour
+{
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+        IapManager.OnPurchaseSucceedEvent += HandlePurchaseSuccess;
+        IapManager.OnPurchaseFailedEvent += HandlePurchaseFailed;
+    }
+
+    void HandlePurchaseSuccess(string id)
+    {
+        switch (id)
+        {
+            case IapProduct.ID_REMOVEADS:
+                // handle
+                break;
+            case IapProduct.ID_1000GEM:
+                // handle
+                break;
+        }
+    }
+
+    void HandlePurchaseFailed(string id)
+    {
+        switch (id)
+        {
+            case IapProduct.ID_REMOVEADS:
+                // handle
+                break;
+            case IapProduct.ID_1000GEM:
+                // handle
+                break;
+        }
+    }
+}
+
+```
+
+- Note: Example 1 is typically used to handle the user interface after a successful or failed purchase and cannot handle restore purchase. Therefore, you should use example 2 to handle logic for tasks such as removing ads, unlocking skins,...
+
+- Check to see if the product has been purchased (only applies to Non-Consumable items)
+```csharp
+
+    public Button buttonRemoveAds;
+
+    private void OnEnable()
+    {
+        if (IapProduct.IsPurchasedRemoveads())
+        {
+            buttonRemoveAds.gameObject.SetActive(false);
+        }
+    }
+
+```
+### Restore purchase
+Restore purchase only applies to Non-Consumable items
+
+Restore Purchase is a mandatory feature on iOS to be able to be released to the store.
+
+On Android when you successfully purchased RemoveAds. Then you uninstall your game and reinstall it. If you click buy remove ads again, google play system will report that you already own this item and can't buy it again, now the user has removed ads but the game still displays ads (incorrect). We will need to handle restore purchase of the user's purchased items so that the user avoids this situation.
+
+On Android restore purchase will be called automatically when you reinstall the game via method `ConfirmPendingPurchase` call in `OnInitialized`. On ios you will need to create a restore purchase button for the user to click
+
+When the restore is successful, it will automatically call the successful purchase callback of each item for further processing for the user
+
+```csharp
+
+    public void OnClickRestorePurchase()
+    {
+#if UNITY_IOS
+        IapManager.Instance.RestorePurchase();
+#endif
+    }
+
+```
+
