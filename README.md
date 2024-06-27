@@ -1,5 +1,5 @@
 ## What
-### Tool support use in app purchase (Unity 2022.3)
+### In-app-purchase support tool for unity games (Unity 2022.3)
 
 <p align="left">
   <a>

@@ -1,7 +1,7 @@
 {
   "name": "com.wolf-package.in-app-purchasing",
   "displayName": "UnityCommon-IAP",
-  "description": "Support for unity in app purchasing",
+  "description": "Support for unity in-app-purchasing",
   "version": "1.0.0",
   "unity": "2021.3",
   "category": "virtuesky",
@@ -12,7 +12,10 @@
     "url": "https://github.com/VirtueSky"
   },
   "keywords": [
-    "Unity", "Iap", "InAppPurchasing", "UnityIAP"
+    "Unity",
+    "Iap",
+    "InAppPurchasing",
+    "UnityIAP"
   ],
   "dependencies": {
     "com.unity.purchasing": "4.12.0"
