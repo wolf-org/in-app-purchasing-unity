@@ -5,6 +5,7 @@ using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
+
 namespace VirtueSky.Iap
 {
     public class IapManager : MonoBehaviour, IDetailedStoreListener
@@ -13,6 +14,7 @@ namespace VirtueSky.Iap
         public static event Action<string> OnPurchaseSucceedEvent;
         public static event Action<string> OnPurchaseFailedEvent;
         public static event Action<Product> OnIapTrackingRevenueEvent;
+        public static event Action<bool> OnShowIapNativePopupEvent;
 
         private IStoreController _controller;
         private IExtensionProvider _extensionProvider;
@@ -70,16 +72,6 @@ namespace VirtueSky.Iap
 #endif
         }
 
-        private void PurchaseProductInternal(string id)
-        {
-#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
-            _controller?.InitiatePurchase(id);
-#elif UNITY_EDITOR
-            InternalPurchaseSuccess(id);
-#endif
-        }
-
-
         private void RequestProductData(ConfigurationBuilder builder)
         {
             foreach (var p in iapSettings.IapDataProducts)
@@ -90,7 +82,7 @@ namespace VirtueSky.Iap
 
         private void InternalPurchaseFailed(string id)
         {
-            //AdStatic.OnChangePreventDisplayAppOpenEvent?.Invoke(false);
+            OnShowIapNativePopupEvent?.Invoke(false);
             foreach (var product in iapSettings.IapDataProducts)
             {
                 if (product.Id != id) continue;
@@ -157,14 +149,13 @@ namespace VirtueSky.Iap
 
         void PurchaseVerified(PurchaseEventArgs purchaseEvent)
         {
-            //AdStatic.OnChangePreventDisplayAppOpenEvent?.Invoke(false);
+            OnShowIapNativePopupEvent?.Invoke(false);
             OnIapTrackingRevenueEvent?.Invoke(purchaseEvent.purchasedProduct);
             InternalPurchaseSuccess(purchaseEvent.purchasedProduct.definition.id);
         }
 
         void InternalPurchaseSuccess(string id)
         {
-            //AdStatic.OnChangePreventDisplayAppOpenEvent?.Invoke(false);
             foreach (var product in iapSettings.IapDataProducts)
             {
                 if (product.Id != id) continue;
@@ -250,6 +241,7 @@ namespace VirtueSky.Iap
                 DontDestroyOnLoad(iapManager);
             }
         }
+
         private void CallActionAndClean(ref Action action)
         {
             if (action == null) return;
@@ -257,11 +249,12 @@ namespace VirtueSky.Iap
             a();
             action = null;
         }
+
         #region API
 
         public IapDataProduct PurchaseProduct(string id)
         {
-            //AdStatic.OnChangePreventDisplayAppOpenEvent?.Invoke(true);
+            OnShowIapNativePopupEvent?.Invoke(true);
             var product = iapSettings.GetIapProduct(id);
             PurchaseProductInternal(product);
             return product;
@@ -269,7 +262,7 @@ namespace VirtueSky.Iap
 
         public IapDataProduct PurchaseProduct(IapDataProduct product)
         {
-            //AdStatic.OnChangePreventDisplayAppOpenEvent?.Invoke(true);
+            OnShowIapNativePopupEvent?.Invoke(true);
             PurchaseProductInternal(product);
             return product;
         }
