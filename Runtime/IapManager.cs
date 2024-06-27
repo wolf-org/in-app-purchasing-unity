@@ -10,6 +10,7 @@ namespace VirtueSky.Iap
 {
     public class IapManager : MonoBehaviour, IDetailedStoreListener
     {
+        public bool dontDestroyOnLoad = true;
         public static IapManager Instance;
         public static event Action<string> OnPurchaseSucceedEvent;
         public static event Action<string> OnPurchaseFailedEvent;
@@ -23,7 +24,11 @@ namespace VirtueSky.Iap
 
         private void Awake()
         {
-            DontDestroyOnLoad(this.gameObject);
+            if (dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(this.gameObject);
+            }
+
             if (Instance == null)
             {
                 Instance = this;
