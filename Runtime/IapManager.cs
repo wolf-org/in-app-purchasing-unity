@@ -23,6 +23,7 @@ namespace VirtueSky.Iap
 
         private void Awake()
         {
+            DontDestroyOnLoad(this.gameObject);
             if (Instance == null)
             {
                 Instance = this;

@@ -16,12 +16,14 @@ namespace VirtueSky.Iap
             {
                 Directory.CreateDirectory(path);
             }
+
             var settings = CreateAndGetScriptableAsset<IapSettings>(path);
             Selection.activeObject = settings;
             EditorGUIUtility.PingObject(settings);
             EditorUtility.FocusProjectWindow();
         }
-         static T CreateAndGetScriptableAsset<T>(string path = "")
+
+        private static T CreateAndGetScriptableAsset<T>(string path = "")
             where T : ScriptableObject
         {
             var so = FindAssetAtFolder<T>(new string[] { "Assets" }).FirstOrDefault();
@@ -36,7 +38,8 @@ namespace VirtueSky.Iap
 
             return so;
         }
-         static T[] FindAssetAtFolder<T>(string[] paths) where T : Object
+
+        private static T[] FindAssetAtFolder<T>(string[] paths) where T : Object
         {
             var list = new List<T>();
             var guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", paths);
