@@ -123,7 +123,6 @@ for version `1.0.0`
 
 ```
 - Example 2: You create a new script similar to the demo below. then attach it to LoadingScene
-(From version 1.1.1, `OnPurchaseSuccessEvent` and `OnPurchaseFailedEvent` will be called via `IapManager`)
 
 ```csharp
 
