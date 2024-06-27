@@ -38,7 +38,7 @@ for version `1.0.0`
 
 - Add data product to list (enter id and select product type), then click `Generate Product`
 - Select `Validate Product` and enter `Google Play Store Key`, then click `Obfuscator Key`
-- Don't forget add `Define Symbol`
+- Don't forget add Define Symbol `VIRTUESKY_IAP`
 
 - After clicking `Generate Product`, an `IapProduct.cs` script is generated in the following format
 
