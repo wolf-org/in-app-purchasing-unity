@@ -1,9 +1,5 @@
 using System;
 
-#if VIRTUESKY_IAP
-using UnityEngine.Purchasing;
-#endif
-
 
 namespace VirtueSky.Iap
 {
