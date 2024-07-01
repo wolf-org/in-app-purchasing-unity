@@ -5,6 +5,7 @@ using Unity.Services.Core.Environments;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
+using VirtueSky.Misc;
 
 namespace VirtueSky.Iap
 {
@@ -93,7 +94,7 @@ namespace VirtueSky.Iap
             {
                 if (product.Id != id) continue;
                 OnPurchaseFailedEvent?.Invoke(product.Id);
-                CallActionAndClean(ref product.purchaseFailedCallback);
+                Common.CallActionAndClean(ref product.purchaseFailedCallback);
             }
         }
 
@@ -166,7 +167,7 @@ namespace VirtueSky.Iap
             {
                 if (product.Id != id) continue;
                 OnPurchaseSucceedEvent?.Invoke(product.Id);
-                CallActionAndClean(ref product.purchaseSuccessCallback);
+                Common.CallActionAndClean(ref product.purchaseSuccessCallback);
             }
         }
 
@@ -246,14 +247,6 @@ namespace VirtueSky.Iap
                 iapManager.AddComponent<IapManager>();
                 DontDestroyOnLoad(iapManager);
             }
-        }
-
-        private void CallActionAndClean(ref Action action)
-        {
-            if (action == null) return;
-            var a = action;
-            a();
-            action = null;
         }
 
         #region API

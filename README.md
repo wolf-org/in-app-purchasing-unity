@@ -27,6 +27,10 @@ for version `1.0.0`
 ```csharp
 "com.wolf-package.in-app-purchasing":"https://github.com/wolf-package/in-app-purchasing-unity.git#1.0.0",
 ```
+dependency `extensions-unity-1.0.0`
+```csharp
+"com.wolf-package.extensions":"https://github.com/wolf-package/extensions-unity.git#1.0.0",
+```
 
 ## Use
 
