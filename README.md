@@ -54,33 +54,33 @@ dependency `extensions-unity-1.0.1`
 		public const string ID_COIN = "com.test.coin";
 		public static IapDataProduct PurchaseCoin()
 		{
-			return IapManager.Instance.PurchaseProduct(IapSettings.Instance.IapDataProducts[0]);
+			return IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[0]);
 		}
 
 		public static bool IsPurchasedCoin()
 		{
-			return IapManager.Instance.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[0]);
+			return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[0]);
 		}
 
 		public static string LocalizedPriceCoin()
 		{
-			return IapManager.Instance.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[0]);
+			return IapManager.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[0]);
 		}
 
 		public const string ID_REMOVEADS = "com.test.removeads";
 		public static IapDataProduct PurchaseRemoveads()
 		{
-			return IapManager.Instance.PurchaseProduct(IapSettings.Instance.IapDataProducts[1]);
+			return IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[1]);
 		}
 
 		public static bool IsPurchasedRemoveads()
 		{
-			return IapManager.Instance.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[1]);
+			return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[1]);
 		}
 
 		public static string LocalizedPriceRemoveads()
 		{
-			return IapManager.Instance.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[1]);
+			return IapManager.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[1]);
 		}
 
 	}
