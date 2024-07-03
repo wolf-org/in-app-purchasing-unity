@@ -196,7 +196,7 @@ namespace VirtueSky.Iap
         }
 
 #if UNITY_IOS
-        public void RestorePurchase()
+        private void InternalRestorePurchase()
         {
             if (!IsInitialized)
             {
@@ -204,7 +204,8 @@ namespace VirtueSky.Iap
                 return;
             }
 
-            if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer)
+            if (Application.platform == RuntimePlatform.IPhonePlayer ||
+                Application.platform == RuntimePlatform.OSXPlayer)
             {
                 Debug.Log("Restore purchase started ...");
 
@@ -212,7 +213,8 @@ namespace VirtueSky.Iap
                 storeProvider.RestoreTransactions(_ =>
                 {
                     // no purchase are avaiable to restore
-                    Debug.Log("Restore purchase continuting: " + _ + ". If no further messages, no purchase available to restore.");
+                    Debug.Log("Restore purchase continuting: " + _ +
+                              ". If no further messages, no purchase available to restore.");
                 });
             }
             else
@@ -308,6 +310,9 @@ namespace VirtueSky.Iap
             _instance.InternalLocalizedPriceProduct(product);
 
         public static string LocalizedPriceProduct(string id) => _instance.InternalLocalizedPriceProduct(id);
+#if UNITY_IOS
+        public static void RestorePurchase() => _instance.InternalRestorePurchase();
+#endif
 
         #endregion
     }
