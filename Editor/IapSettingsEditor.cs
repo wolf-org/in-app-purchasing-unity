@@ -64,6 +64,7 @@ namespace VirtueSky.Iap
             {
                 Directory.CreateDirectory(pathDefaultScript);
             }
+
             var productImplPath = $"{pathDefaultScript}/IapProduct.cs";
             var str = "namespace VirtueSky.Iap\n{";
             str += "\n\tpublic struct IapProduct\n\t{";
@@ -79,7 +80,7 @@ namespace VirtueSky.Iap
                     $"\n\t\tpublic static IapDataProduct Purchase{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(itemName)}()";
                 str += "\n\t\t{";
                 str +=
-                    $"\n\t\t\treturn IapManager.Instance.PurchaseProduct(IapSettings.Instance.IapDataProducts[{i}]);";
+                    $"\n\t\t\treturn IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[{i}]);";
                 str += "\n\t\t}";
                 str += "\n";
 
@@ -87,7 +88,7 @@ namespace VirtueSky.Iap
                     $"\n\t\tpublic static bool IsPurchased{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(itemName)}()";
                 str += "\n\t\t{";
                 str +=
-                    $"\n\t\t\treturn IapManager.Instance.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[{i}]);";
+                    $"\n\t\t\treturn IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[{i}]);";
                 str += "\n\t\t}";
 
                 str += "\n";
@@ -96,7 +97,7 @@ namespace VirtueSky.Iap
                     $"\n\t\tpublic static string LocalizedPrice{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(itemName)}()";
                 str += "\n\t\t{";
                 str +=
-                    $"\n\t\t\treturn IapManager.Instance.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[{i}]);";
+                    $"\n\t\t\treturn IapManager.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[{i}]);";
                 str += "\n\t\t}";
                 str += "\n";
             }
@@ -153,7 +154,8 @@ namespace VirtueSky.Iap
 
             EditorGUI.DrawRect(rect, new Color32(0, 0, 0, 255));
         }
-         string GetPathInCurrentEnvironent(string fullRelativePath)
+
+        string GetPathInCurrentEnvironent(string fullRelativePath)
         {
             var upmPath = $"Packages/com.wolf-package.in-app-purchasing/{fullRelativePath}";
             var normalPath = $"Assets/in-app-purchasing/{fullRelativePath}";

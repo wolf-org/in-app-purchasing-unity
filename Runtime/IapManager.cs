@@ -12,7 +12,7 @@ namespace VirtueSky.Iap
     public class IapManager : MonoBehaviour, IDetailedStoreListener
     {
         public bool dontDestroyOnLoad = true;
-        public static IapManager Instance;
+        private static IapManager _instance;
         public static event Action<string> OnPurchaseSucceedEvent;
         public static event Action<string> OnPurchaseFailedEvent;
         public static event Action<Product> OnIapTrackingRevenueEvent;
@@ -30,9 +30,9 @@ namespace VirtueSky.Iap
                 DontDestroyOnLoad(this.gameObject);
             }
 
-            if (Instance == null)
+            if (_instance == null)
             {
-                Instance = this;
+                _instance = this;
             }
             else
             {
@@ -42,7 +42,7 @@ namespace VirtueSky.Iap
 
         private void OnDestroy()
         {
-            if (Instance == this) Instance = null;
+            if (_instance == this) _instance = null;
         }
 
         private void Start()
@@ -249,9 +249,9 @@ namespace VirtueSky.Iap
             }
         }
 
-        #region API
+        #region Internal API
 
-        public IapDataProduct PurchaseProduct(string id)
+        private IapDataProduct InternalPurchaseProduct(string id)
         {
             OnShowIapNativePopupEvent?.Invoke(true);
             var product = iapSettings.GetIapProduct(id);
@@ -259,38 +259,55 @@ namespace VirtueSky.Iap
             return product;
         }
 
-        public IapDataProduct PurchaseProduct(IapDataProduct product)
+        private IapDataProduct InternalPurchaseProduct(IapDataProduct product)
         {
             OnShowIapNativePopupEvent?.Invoke(true);
             PurchaseProductInternal(product);
             return product;
         }
 
-        public bool IsPurchasedProduct(IapDataProduct product)
+        private bool InternalIsPurchasedProduct(IapDataProduct product)
         {
             if (_controller == null) return false;
             return ConvertProductType(product.iapProductType) == ProductType.NonConsumable &&
                    _controller.products.WithID(product.Id).hasReceipt;
         }
 
-        public bool IsPurchasedProduct(string id)
+        private bool InternalIsPurchasedProduct(string id)
         {
             if (_controller == null) return false;
             return ConvertProductType(iapSettings.GetIapProduct(id).iapProductType) == ProductType.NonConsumable &&
                    _controller.products.WithID(id).hasReceipt;
         }
 
-        public string LocalizedPriceProduct(IapDataProduct product)
+        private string InternalLocalizedPriceProduct(IapDataProduct product)
         {
             if (_controller == null) return "";
             return _controller.products.WithID(product.Id).metadata.localizedPriceString;
         }
 
-        public string LocalizedPriceProduct(string id)
+        private string InternalLocalizedPriceProduct(string id)
         {
             if (_controller == null) return "";
             return _controller.products.WithID(id).metadata.localizedPriceString;
         }
+
+        #endregion
+
+        #region Public API
+
+        public static IapDataProduct PurchaseProduct(string id) => _instance.InternalPurchaseProduct(id);
+
+        public static IapDataProduct PurchaseProduct(IapDataProduct product) =>
+            _instance.InternalPurchaseProduct(product);
+
+        public static bool IsPurchasedProduct(IapDataProduct product) => _instance.InternalIsPurchasedProduct(product);
+        public static bool IsPurchasedProduct(string id) => _instance.InternalIsPurchasedProduct(id);
+
+        public static string LocalizedPriceProduct(IapDataProduct product) =>
+            _instance.InternalLocalizedPriceProduct(product);
+
+        public static string LocalizedPriceProduct(string id) => _instance.InternalLocalizedPriceProduct(id);
 
         #endregion
     }
