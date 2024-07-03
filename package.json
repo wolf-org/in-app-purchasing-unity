@@ -19,6 +19,6 @@
   ],
   "dependencies": {
     "com.unity.purchasing": "4.12.0",
-    "com.wolf-package.extensions": "https://github.com/wolf-package/extensions-unity.git#1.0.0"
+    "com.wolf-package.extensions": "https://github.com/wolf-package/extensions-unity.git#1.0.1"
   }
 }
