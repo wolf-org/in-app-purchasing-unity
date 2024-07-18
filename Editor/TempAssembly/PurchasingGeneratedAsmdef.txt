@@ -1,5 +1,5 @@
 {
-    "name": "Wolf.Purchasing.Generate",
+    "name": "UnityCommon.Purchasing.Generate",
     "rootNamespace": "",
     "references": [
         "GUID:94e1de2458b07d0bf1e9f13e6ae06443",

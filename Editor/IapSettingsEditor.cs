@@ -127,8 +127,8 @@ namespace VirtueSky.Iap
                     $"Editor/TempAssembly/PurchasingGeneratedAsmdefMeta.txt");
             var asmdef = (TextAsset)AssetDatabase.LoadAssetAtPath(pathAsmdef, typeof(TextAsset));
             var meta = (TextAsset)AssetDatabase.LoadAssetAtPath(pathAsmdefMeta, typeof(TextAsset));
-            string path = Path.Combine(TangleFileConsts.k_OutputPath, "Wolf.Purchasing.Generate.asmdef");
-            string pathMeta = Path.Combine(TangleFileConsts.k_OutputPath, "Wolf.Purchasing.Generate.asmdef.meta");
+            string path = Path.Combine(TangleFileConsts.k_OutputPath, "UnityCommon.Purchasing.Generate.asmdef");
+            string pathMeta = Path.Combine(TangleFileConsts.k_OutputPath, "UnityCommon.Purchasing.Generate.asmdef.meta");
             if (!File.Exists(path))
             {
                 var writer = new StreamWriter(path, false);
@@ -158,7 +158,7 @@ namespace VirtueSky.Iap
         string GetPathInCurrentEnvironent(string fullRelativePath)
         {
             var upmPath = $"Packages/com.wolf-package.in-app-purchasing/{fullRelativePath}";
-            var normalPath = $"Assets/in-app-purchasing/{fullRelativePath}";
+            var normalPath = $"Assets/in-app-purchasing-unity/{fullRelativePath}";
             return !File.Exists(Path.GetFullPath(upmPath)) ? normalPath : upmPath;
         }
     }
