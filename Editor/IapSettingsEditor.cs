@@ -11,6 +11,7 @@ namespace VirtueSky.Iap
     {
         private IapSettings _iapSettings;
         private SerializedProperty _runtimeAutoInit;
+        private SerializedProperty _runtimeAutoInitType;
         private SerializedProperty _iapDataProducts;
         private SerializedProperty _isValidatePurchase;
         private SerializedProperty _googlePlayStoreKey;
@@ -19,6 +20,7 @@ namespace VirtueSky.Iap
         {
             _iapSettings = target as IapSettings;
             _runtimeAutoInit = serializedObject.FindProperty("runtimeAutoInit");
+            _runtimeAutoInitType = serializedObject.FindProperty("runtimeAutoInitType");
             _iapDataProducts = serializedObject.FindProperty("iapDataProducts");
             _isValidatePurchase = serializedObject.FindProperty("isValidatePurchase");
             _googlePlayStoreKey = serializedObject.FindProperty("googlePlayStoreKey");
@@ -32,6 +34,12 @@ namespace VirtueSky.Iap
             GuiLine(2);
             GUILayout.Space(10);
             EditorGUILayout.PropertyField(_runtimeAutoInit);
+            if (_runtimeAutoInit.boolValue)
+            {
+                EditorGUILayout.PropertyField(_runtimeAutoInitType);
+            }
+
+            GUILayout.Space(10);
             EditorGUILayout.PropertyField(_iapDataProducts);
             GUILayout.Space(10);
             if (GUILayout.Button("Generate Product"))
@@ -128,7 +136,8 @@ namespace VirtueSky.Iap
             var asmdef = (TextAsset)AssetDatabase.LoadAssetAtPath(pathAsmdef, typeof(TextAsset));
             var meta = (TextAsset)AssetDatabase.LoadAssetAtPath(pathAsmdefMeta, typeof(TextAsset));
             string path = Path.Combine(TangleFileConsts.k_OutputPath, "UnityCommon.Purchasing.Generate.asmdef");
-            string pathMeta = Path.Combine(TangleFileConsts.k_OutputPath, "UnityCommon.Purchasing.Generate.asmdef.meta");
+            string pathMeta =
+                Path.Combine(TangleFileConsts.k_OutputPath, "UnityCommon.Purchasing.Generate.asmdef.meta");
             if (!File.Exists(path))
             {
                 var writer = new StreamWriter(path, false);

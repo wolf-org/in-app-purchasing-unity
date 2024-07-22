@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VirtueSky.Core;
 
 namespace VirtueSky.Iap
 {
@@ -22,6 +23,7 @@ namespace VirtueSky.Iap
         }
 
         [SerializeField] private bool runtimeAutoInit = true;
+        [SerializeField] private CoreEnum.RuntimeAutoInitType runtimeAutoInitType;
         [SerializeField] private List<IapDataProduct> iapDataProducts = new List<IapDataProduct>();
         [SerializeField] private bool isValidatePurchase = true;
 #if UNITY_EDITOR
@@ -29,6 +31,7 @@ namespace VirtueSky.Iap
         public string GooglePlayStoreKey => googlePlayStoreKey;
 #endif
         public bool RuntimeAutoInit => runtimeAutoInit;
+        public CoreEnum.RuntimeAutoInitType RuntimeAutoInitType => runtimeAutoInitType;
         public List<IapDataProduct> IapDataProducts => iapDataProducts;
         public bool IsValidatePurchase => isValidatePurchase;
 
