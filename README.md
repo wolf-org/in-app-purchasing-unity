@@ -49,39 +49,29 @@ dependency `extensions-unity-1.0.4`
 
 ```csharp
 
-	public struct IapProduct
+        public static class IapProduct
 	{
-		public const string ID_COIN = "com.test.coin";
-		public static IapDataProduct PurchaseCoin()
-		{
-			return IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[0]);
-		}
+	    public const string ID_REMOVEADS = "com.test.removeads";
+	    public static IapDataProduct PurchaseRemoveads()
+	    {
+		return IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[0]);
+	    }
 
-		public static bool IsPurchasedCoin()
-		{
-			return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[0]);
-		}
+	    public static bool IsPurchasedRemoveads()
+	    {
+		return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[0]);
+	    }
 
-		public static string LocalizedPriceCoin()
-		{
-			return IapManager.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[0]);
-		}
-
-		public const string ID_REMOVEADS = "com.test.removeads";
-		public static IapDataProduct PurchaseRemoveads()
-		{
+	    public const string ID_1000GEM = "com.test.1000gem";
+	    public static IapDataProduct Purchase1000Gem()
+	    {
 			return IapManager.PurchaseProduct(IapSettings.Instance.IapDataProducts[1]);
-		}
+	    }
 
-		public static bool IsPurchasedRemoveads()
-		{
-			return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[1]);
-		}
-
-		public static string LocalizedPriceRemoveads()
-		{
-			return IapManager.LocalizedPriceProduct(IapSettings.Instance.IapDataProducts[1]);
-		}
+	    public static bool IsPurchased1000Gem()
+	    {
+		return IapManager.IsPurchasedProduct(IapSettings.Instance.IapDataProducts[1]);
+	    }
 
 	}
 
@@ -91,16 +81,6 @@ dependency `extensions-unity-1.0.4`
 - Example 1:
 ```csharp
         public Button buttonRemoveAds;
-        public TextMeshProUGUI textLocalizedPriceRemoveAds;
-
-        /// <summary>
-        /// set text localized price for RemoveAds product
-        /// </summary>
-        void SetupTextPrice()
-        {
-            textLocalizedPriceRemoveAds.text = IapProduct.LocalizedPriceRemoveads();
-        }
-
         /// <summary>
         /// refresh ui button remove ads
         /// disable buttonRemoveAds if RemoveAds product has been purchased
