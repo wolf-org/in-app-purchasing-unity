@@ -23,13 +23,13 @@
 
 ### Add the line below to `Packages/manifest.json`
 
-for version `1.0.4`
+for version `1.0.5`
 ```csharp
-"com.wolf-package.in-app-purchasing":"https://github.com/wolf-package/in-app-purchasing-unity.git#1.0.4",
+"com.wolf-org.in-app-purchasing":"https://github.com/wolf-org/in-app-purchasing-unity.git#1.0.5",
 ```
-dependency `extensions-unity-1.0.4`
+dependency `extensions-unity-1.0.5`
 ```csharp
-"com.wolf-package.extensions":"https://github.com/wolf-package/extensions-unity.git#1.0.4",
+"com.wolf-org.extensions":"https://github.com/wolf-org/extensions-unity.git#1.0.5",
 ```
 
 ## Use
