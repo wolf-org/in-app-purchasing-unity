@@ -180,7 +180,7 @@ When the restore is successful, it will automatically call the successful purcha
     public void OnClickRestorePurchase()
     {
 #if UNITY_IOS
-        IapManager.Instance.RestorePurchase();
+        IapManager.RestorePurchase();
 #endif
     }
 
